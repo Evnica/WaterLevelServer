@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Class: Station
  * Version: 0.1
- * Created on 11.05.2016 with the help of IntelliJ IDEA (thanks!)
+ * Created on 20.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
  * Description:
  */

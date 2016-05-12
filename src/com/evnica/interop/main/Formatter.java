@@ -9,7 +9,7 @@ import java.text.NumberFormat;
 /**
  * Class: Formatter
  * Version: 0.1
- * Created on 12.05.2016 with the help of IntelliJ IDEA (thanks!)
+ * Created on 20.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
  * Description:
  */

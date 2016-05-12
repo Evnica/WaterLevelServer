@@ -1,9 +1,6 @@
 package com.evnica.interop.test;
 
-import com.evnica.interop.main.DataProcessor;
-import com.evnica.interop.main.DataReader;
-import com.evnica.interop.main.Formatter;
-import com.evnica.interop.main.Station;
+import com.evnica.interop.main.*;
 import org.joda.time.LocalTime;
 import org.junit.Test;
 
@@ -14,9 +11,9 @@ import java.util.List;
 /**
  * Class: DataProcessorTest
  * Version: 0.1
- * Created on 11.05.2016 with the help of IntelliJ IDEA (thanks!)
+ * Created on 22.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: A test for the DataProcessor class and its convertTextIntoStation() method
  */
 public class DataProcessorTest
 {
@@ -39,5 +36,6 @@ public class DataProcessorTest
         assert (stations.get(0).measurements.get( stations.get(0).measurements.size() - 1 ).getHourlyMeasurementValues().get( 23 ).getValue() == null);
 
     }
+
 
 }
