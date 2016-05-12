@@ -17,17 +17,12 @@ public class Formatter
 {
     static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern( "dd.MM.yyyy" );
     static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern( "HH:mm" );
-    static final DateTimeFormatter WEB_DATE_FORMATTER = DateTimeFormat.forPattern( "yyyy-MM-dd" );
-    static final DateTimeFormatter WEB_TIME_FORMATTER = DateTimeFormat.forPattern( "HH:mm:ss" );
+    static final DateTimeFormatter WEB_FORMATTER = DateTimeFormat.forPattern( "yyyy-MM-dd'T'HH:mm:ss'Z'" );
 
-    public static DateTimeFormatter getWebTimeFormatter()
-    {
-        return WEB_TIME_FORMATTER;
-    }
 
     public static DateTimeFormatter getWebDateFormatter()
     {
-        return WEB_DATE_FORMATTER;
+        return WEB_FORMATTER;
     }
 
     static final NumberFormat NUMBER_FORMAT = new DecimalFormat( "#0.00" );

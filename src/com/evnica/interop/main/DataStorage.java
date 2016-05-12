@@ -13,14 +13,9 @@ import java.util.stream.Collectors;
  */
 public class DataStorage
 {
-    static List<Station> stations = new ArrayList<>(  );
+    static List<Station> stations = new ArrayList<>();
 
-    public void setStations( List<Station> stations )
-    {
-        stations = stations;
-    }
-
-    public Station findStation ( String stationName)
+    public static Station findStation ( String stationName)
     {
         Station result;
         String toFind = stationName.toLowerCase();
@@ -30,6 +25,24 @@ public class DataStorage
         if (chosenStations.size() > 0) { result = chosenStations.get( 0 ); }
         else { result = null; }
         return result;
+    }
+
+    public static String getNamesOfStationsInStorage()
+    {
+        String names = "None";
+        if (  stations.size() > 1 )
+        {
+            names = stations.get( 0 ).name;
+            for (int i = 1; i < stations.size(); i++)
+            {
+                names = names + ", " + stations.get( i ).name;
+            }
+        }
+        else if (stations.size() == 1)
+        {
+            names = stations.get( 0 ).name;
+        }
+        return names;
     }
 
 
