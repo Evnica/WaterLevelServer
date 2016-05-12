@@ -44,6 +44,15 @@ public class Measurement implements Comparable<Measurement>
     @Override
     public String toString()
     {
-        return timestamp.toString( Formatter.TIME_FORMATTER ) + "#" + value;
+        String result;
+        if (value != null)
+        {
+            result = timestamp.toString( Formatter.TIME_FORMATTER ) + "#" + Formatter.NUMBER_FORMAT.format( value );
+        }
+        else
+        {
+            result = timestamp.toString( Formatter.TIME_FORMATTER ) + "#" + value;
+        }
+        return result;
     }
 }
