@@ -21,6 +21,16 @@ public class Measurement implements Comparable<Measurement>
         this.timestamp = timestamp;
     }
 
+    public Double getValue()
+    {
+        return value;
+    }
+
+    public LocalTime getTimestamp()
+    {
+        return timestamp;
+    }
+
     @Override
     public int compareTo( Measurement anotherMeasurement )
     {

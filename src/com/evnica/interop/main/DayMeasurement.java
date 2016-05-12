@@ -13,7 +13,7 @@ import java.util.List;
  * Description:
  */
 
-class DayMeasurement implements Comparable<DayMeasurement>
+public class DayMeasurement implements Comparable<DayMeasurement>
 {
     LocalDate date;
     List<Measurement> hourlyMeasurementValues = new ArrayList<>();
@@ -24,6 +24,16 @@ class DayMeasurement implements Comparable<DayMeasurement>
     {
         this.date = date;
         this.hourlyMeasurementValues = hourlyMeasurementValues;
+    }
+
+    public List<Measurement> getHourlyMeasurementValues()
+    {
+        return hourlyMeasurementValues;
+    }
+
+    public LocalDate getDate()
+    {
+        return date;
     }
 
     @Override

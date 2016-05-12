@@ -26,7 +26,7 @@ public class DataProcessor
 
     public static Station convertTextIntoStation (List<String> fileContent)
     {
-        Station station = new Station(fileContent.get( 1 ), fileContent.get( 2 ), fileContent.get( 3 ));
+        Station station = new Station(fileContent.get( 1 ) + " (" +  fileContent.get( 3 ) + ")", fileContent.get( 2 ));
         List<DayMeasurement> measurements = new ArrayList<>(  );
         Double[] oneHourMeasurements = new Double[4];
         Double value;
@@ -121,6 +121,7 @@ public class DataProcessor
                    }
                }
         }
+        replaceNullValuesWithMeanValues( measurements );
         station.measurements = measurements;
         return station;
     }
@@ -152,12 +153,13 @@ public class DataProcessor
         return result;
     }
 
+
     private static void replaceNullValuesWithMeanValues(List<DayMeasurement> dayMeasurements)
     {
         Collections.sort(dayMeasurements);
         dayMeasurements.forEach( day -> Collections.sort( day.hourlyMeasurementValues ) );
-        Double lastValidValue = null;
-        Double next = null;
+        Double previousValidValue = null;
+        Double next;
         Double average;
         List<Integer> indicesOfNullValues = new ArrayList<>(  );
 
@@ -178,7 +180,8 @@ public class DataProcessor
                 {
                     if (day.hourlyMeasurementValues.get( i ).value != null)
                     {
-                        lastValidValue = day.hourlyMeasurementValues.get( i ).value;
+                        previousValidValue = day.hourlyMeasurementValues.get( i ).value;
+                        day.indexOfFirstValidMeasurement = i;
                     }
                     else //current value is null
                     {
@@ -190,10 +193,10 @@ public class DataProcessor
                         }
                         else // next != null
                         {
-                            if (lastValidValue != null) // next != null, lastValid != null
+                            if ( previousValidValue != null) // next != null, lastValid != null
                             {
-                                average = (lastValidValue + next) / 2;
-                                day.hourlyMeasurementValues.get( i - 1 ).value = average;
+                                average = ( previousValidValue + next) / 2;
+                                day.hourlyMeasurementValues.get( i ).value = average;
 
                                 if (!indicesOfNullValues.isEmpty()) //2 or more values in a row between two valid values were null
                                 {
@@ -206,11 +209,7 @@ public class DataProcessor
                             }
                         }
                     }
-                    i++;
-                }
-                if (!indicesOfNullValues.isEmpty())
-                {
-                    day.indexOfFirstValidMeasurement = indicesOfNullValues.get( 0 );
+                    i--;
                 }
             }
         }
