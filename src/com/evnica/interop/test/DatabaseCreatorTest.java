@@ -31,6 +31,7 @@ public class DatabaseCreatorTest
         DataStorage.fillTheStorage();
         Station s = DataStorage.findStation( "Riedenburg" );
         assertNotNull( s );
+
         System.out.println("Connected to DB: " + DatabaseCreator.connect());
 
         if (DatabaseCreator.tableOfMeasurementsExists())
@@ -47,8 +48,8 @@ public class DatabaseCreatorTest
         PreparedStatement statement = DatabaseCreator.getConnection().prepareStatement( "SELECT * FROM measurements;" );
         ResultSet resultSet = statement.executeQuery();
         assertNotNull( resultSet );
-        /*assertTrue( DatabaseCreator.deleteFromTable() );
-        assertTrue( DatabaseCreator.dropTable() );*/
+        assertTrue( DatabaseCreator.deleteFromTable() );
+        assertTrue( DatabaseCreator.dropTable() );
         assertTrue( DatabaseCreator.closeConnection() );
     }
 
