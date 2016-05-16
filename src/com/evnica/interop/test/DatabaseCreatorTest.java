@@ -49,6 +49,7 @@ public class DatabaseCreatorTest
         assertNotNull( resultSet );
         assertTrue( DatabaseCreator.deleteFromTable() );
         assertTrue( DatabaseCreator.dropTable() );
+        assertTrue( DatabaseCreator.closeConnection() );
     }
 
 

@@ -239,7 +239,7 @@ public class DatabaseCreator
         return success;
     }
 
-    public boolean closeConnection()
+    public static boolean closeConnection()
     {
         boolean success = false;
         if (connection != null)
