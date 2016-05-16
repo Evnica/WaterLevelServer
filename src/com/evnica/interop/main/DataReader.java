@@ -73,4 +73,12 @@ public class DataReader
                 collect( Collectors.toList() );
     }
 
+    public static List<File> listAllFilesInResourcesFromServlet(File folder) throws IOException
+    {
+        return  Files.walk( folder.toPath() ).
+                filter( Files::isRegularFile ).
+                map( Path::toFile).
+                collect( Collectors.toList() );
+    }
+
 }
