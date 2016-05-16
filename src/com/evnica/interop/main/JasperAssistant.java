@@ -1,6 +1,5 @@
 package com.evnica.interop.main;
 
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.List;
 /**
  * Class: JasperAssistant
  * Version: 0.1
- * Created on 15.05.2016 with the help of IntelliJ IDEA (thanks!)
+ * Created on 14.05.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
  * Description:
  */
