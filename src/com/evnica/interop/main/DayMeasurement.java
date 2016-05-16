@@ -10,7 +10,7 @@ import java.util.List;
  * Version: 0.1
  * Created on 20.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Contains date and a list of time-value pairs of hourly water level measurements
  */
 
 public class DayMeasurement implements Comparable<DayMeasurement>

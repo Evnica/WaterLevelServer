@@ -9,7 +9,7 @@ import java.util.List;
  * Version: 0.1
  * Created on 14.05.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Creates a data source for jasper report (table model format)
  */
 public class JasperAssistant
 {

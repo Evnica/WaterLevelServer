@@ -11,7 +11,7 @@ import java.text.NumberFormat;
  * Version: 0.1
  * Created on 20.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Enlists all formatters used by the app
  */
 public class Formatter
 {

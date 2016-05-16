@@ -11,7 +11,8 @@ import java.sql.*;
  * Version: 0.1
  * Created on 16.05.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Creates an embedded db (H2) and executes basic operation:
+ *              create table, insert data, delete from table, drop table
  */
 public class DatabaseCreator
 {

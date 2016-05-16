@@ -15,7 +15,8 @@ import static org.junit.Assert.*;
  * Version: 0.1
  * Created on 16.05.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Tests connection to embedded DB and basic operations on in (connect, create a table, insert values,
+ *              delete values, drop table, disconnect)
  */
 public class DatabaseCreatorTest
 {
@@ -23,6 +24,7 @@ public class DatabaseCreatorTest
     public void connect() throws Exception
     {
         assertTrue( DatabaseCreator.connect() );
+        DatabaseCreator.closeConnection();
     }
 
     @Test

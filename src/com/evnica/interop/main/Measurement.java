@@ -7,7 +7,7 @@ import org.joda.time.LocalTime;
  * Version: 0.1
  * Created on 20.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Contains time-value pair of water level measurement. Unit is static.
  */
 public class Measurement implements Comparable<Measurement>
 {

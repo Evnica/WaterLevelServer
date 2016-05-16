@@ -13,14 +13,14 @@ import static org.junit.Assert.*;
  * Version: 0.1
  * Created on 22.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Tests Station class and its methods (getting measurements within interval
  */
 public class StationTest
 {
     @Test
     public void test() throws Exception
     {
-        List<File> allResources = DataReader.listAllFilesInResources( "../WaterLevelServer/app/WEB-INF/resources" );
+        List<File> allResources = DataReader.listAllFilesInResources( "../WaterLevelServer/app/resources" );
         List<String> firstStationData = DataReader.readData( allResources.get( 0 ) );
         Station station = DataProcessor.convertTextIntoStation( firstStationData );
 

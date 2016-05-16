@@ -20,7 +20,7 @@ public class DataProcessorTest
     @Test
     public void convertTextIntoStation() throws Exception
     {
-        List<File> resources = DataReader.listAllFilesInResources( "../WaterLevelServer/app/WEB-INF/resources" );
+        List<File> resources = DataReader.listAllFilesInResources( "../WaterLevelServer/app/resources" );
         List<List<String>> data = new ArrayList<>( resources.size() );
 
         resources.forEach( source -> data.add( DataReader.readData( source ) ) );
@@ -33,7 +33,7 @@ public class DataProcessorTest
         LocalTime time = Formatter.getTimeFormatter().parseLocalTime( "01:00" );
         assert (stations.get(0).measurements.get( 0 ).getHourlyMeasurementValues().get( 0 ).getTimestamp().equals( time ));
         assert (stations.get(0).measurements.get( 0 ).getHourlyMeasurementValues().get( 1 ).getValue().equals( 402.25 ));
-        assert (stations.get(0).measurements.get( stations.get(0).measurements.size() - 1 ).getHourlyMeasurementValues().get( 23 ).getValue() == null);
+        assert (stations.get(0).measurements.get( stations.get(0).measurements.size() - 1 ).getHourlyMeasurementValues().get( 13 ).getValue() != null);
 
     }
 

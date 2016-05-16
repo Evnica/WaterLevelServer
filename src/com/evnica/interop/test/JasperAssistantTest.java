@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * Version: 0.1
  * Created on 16.05.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Tests creation of pdf file with a report proceeding from a station name and time interval (locally)
  */
 public class JasperAssistantTest
 {
@@ -62,8 +62,6 @@ public class JasperAssistantTest
 
         JasperPrint jasperPrint = JasperFillManager.fillReport( sourceFileName, parameters, new JRTableModelDataSource( JasperAssistant.getTableModel() ));
         JasperExportManager.exportReportToPdfFile( jasperPrint, "report.pdf" );
-
-
 
     }
 }

@@ -9,7 +9,7 @@ import org.joda.time.LocalTime;
  * Version: 0.1
  * Created on 22.04.2016 with the help of IntelliJ IDEA (thanks!)
  * Author: Evnica
- * Description:
+ * Description: Data to test, how adequately measurements within interval are chosen, as well as and reports production
  */
 class TestData
 {
