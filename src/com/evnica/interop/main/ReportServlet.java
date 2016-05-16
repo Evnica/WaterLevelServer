@@ -138,7 +138,7 @@ public class ReportServlet extends HttpServlet
 
         measurementsWithinInterval = requestedStation.getMeasurementsWithinInterval( startDate, startTime, endDate, endTime );
 
-        displayReport( response, requestedStation.name, requestedStation.bodyOfWater, measurementsWithinInterval );
+        displayReport( response, requestedStation.name, measurementsWithinInterval );
 
 
 
@@ -151,7 +151,7 @@ public class ReportServlet extends HttpServlet
         /*TODO: provide a different implementation*/
     }
 
-    private void displayReport(HttpServletResponse response, String stationName, String bodyOfWater, List<DayMeasurement> measurements)
+    private void displayReport(HttpServletResponse response, String stationName, List<DayMeasurement> measurements)
     {
         //TODO: implement using JasperReports
     }
