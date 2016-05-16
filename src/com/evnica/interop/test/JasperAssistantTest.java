@@ -58,7 +58,7 @@ public class JasperAssistantTest
         );
 
         String sourceFileName =
-                "../WaterLevelServer/app/WEB-INF/lib/Test.jasper";
+                "../WaterLevelServer/app/jasper/Test.jasper";
 
         JasperPrint jasperPrint = JasperFillManager.fillReport( sourceFileName, parameters, new JRTableModelDataSource( JasperAssistant.getTableModel() ));
         JasperExportManager.exportReportToPdfFile( jasperPrint, "report.pdf" );
@@ -66,13 +66,4 @@ public class JasperAssistantTest
 
 
     }
-
-    @Test
-    public void testWithDB() throws Exception
-    {
-        DataStorage.fillTheStorage();
-        Station s = DataStorage.findStation( "Riedenburg" );
-
-    }
-
 }

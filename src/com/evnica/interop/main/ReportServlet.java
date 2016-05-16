@@ -28,7 +28,7 @@ import java.util.List;
 
 @WebServlet (name = "ReportServlet",
              loadOnStartup = 1,
-             urlPatterns = "/pegel")
+             urlPatterns = "/ReportServlet")
 public class ReportServlet extends HttpServlet
 {
     private static final long serialVersionUID = 2938837482734983849L;
@@ -47,7 +47,7 @@ public class ReportServlet extends HttpServlet
     {
         try
         {
-            List<File> resources = DataReader.listAllFilesInResources( "../WaterLevelServer/app/WEB-INF/resources" );
+            List<File> resources = DataReader.listAllFilesInResources( "/resources" );
             List<List<String>> data = new ArrayList<>( resources.size() );
             resources.forEach( source -> data.add( DataReader.readData( source ) ) );
             data.forEach(st -> DataStorage.stations.add( DataProcessor.convertTextIntoStation( st ) ) );
