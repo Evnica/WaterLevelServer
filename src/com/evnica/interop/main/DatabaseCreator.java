@@ -45,7 +45,7 @@ public class DatabaseCreator
 
     public static boolean insert(Station station)
     {
-        Statement statement;
+        Statement statement = null;
         boolean success = false;
         boolean connected = true;
         String timestamp;
@@ -88,6 +88,19 @@ public class DatabaseCreator
                 LOGGER.error( "Failed to insert data ", e );
                 success = false;
             }
+            finally
+            {
+                if (statement != null)
+                {
+                    try
+                    {
+                        statement.close();
+                    } catch ( SQLException e )
+                    {
+                        LOGGER.error( "Insert statement wasn't closed ", e );
+                    }
+                }
+            }
         }
         return success;
     }
@@ -104,9 +117,10 @@ public class DatabaseCreator
         {
             if ( tableOfMeasurementsExists )
             {
+                PreparedStatement statement = null;
                 try
                 {
-                    PreparedStatement statement = connection.prepareStatement("DELETE FROM measurements;");
+                    statement = connection.prepareStatement("DELETE FROM measurements;");
                     statement.executeUpdate();
                     success = true;
                     tableFull = false;
@@ -116,6 +130,20 @@ public class DatabaseCreator
                     LOGGER.error( "Can't delete from measurements table", e );
                     success = false;
                 }
+                finally
+                {
+                    if (statement != null)
+                    {
+                        try
+                        {
+                            statement.close();
+                        }
+                        catch ( SQLException e )
+                        {
+                            LOGGER.error( "Delete statement didn't get closed ", e );
+                        }
+                    }
+                }
             }
         }
         return success;
@@ -123,6 +151,7 @@ public class DatabaseCreator
 
     public static boolean createTable()
     {
+        Statement statement = null;
         boolean success = false;
         boolean connected = true;
         if (connection == null)
@@ -135,7 +164,7 @@ public class DatabaseCreator
             {
                 try
                 {
-                    Statement statement = connection.createStatement();
+                    statement = connection.createStatement();
                     statement.executeUpdate( "CREATE TABLE measurements (" +
                             "timestamp TIMESTAMP," +
                             "value DOUBLE" +
@@ -148,6 +177,19 @@ public class DatabaseCreator
                     LOGGER.error( "Can't create measurements table", e );
                     success = false;
                 }
+                finally
+                {
+                    if (statement != null)
+                    {
+                        try
+                        {
+                            statement.close();
+                        } catch ( SQLException e )
+                        {
+                            LOGGER.error( "Create statement wasn't closed ", e );
+                        }
+                    }
+                }
             }
         }
         return success;
@@ -155,6 +197,7 @@ public class DatabaseCreator
 
     public static boolean dropTable()
     {
+        Statement statement = null;
         boolean connected = true;
         boolean success = false;
         if (connection == null)
@@ -167,7 +210,7 @@ public class DatabaseCreator
             {
                 try
                 {
-                    Statement statement = connection.createStatement();
+                    statement = connection.createStatement();
                     statement.execute( "DROP TABLE measurements;" );
                     tableOfMeasurementsExists = false;
                     success = true;
@@ -177,6 +220,37 @@ public class DatabaseCreator
                     LOGGER.error( "Can't drop measurements table", e );
                     success = false;
                 }
+                finally
+                {
+                    if (statement != null)
+                    {
+                        try
+                        {
+                            statement.close();
+                        }
+                        catch ( SQLException e )
+                        {
+                            LOGGER.error( "Drop statement didn't get closed ", e );
+                        }
+                    }
+                }
+            }
+        }
+        return success;
+    }
+
+    public boolean closeConnection()
+    {
+        boolean success = false;
+        if (connection != null)
+        {
+            try
+            {
+                connection.close();
+                success = true;
+            } catch ( SQLException e )
+            {
+                LOGGER.error( "Connection couldn't be closed", e );
             }
         }
         return success;
