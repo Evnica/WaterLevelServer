@@ -27,6 +27,7 @@ public class DataProcessor
     public static Station convertTextIntoStation (List<String> fileContent)
     {
         Station station = new Station(fileContent.get( 1 ) + " (" +  fileContent.get( 3 ) + ")", fileContent.get( 2 ));
+        int numberOfInvalidValues = 0, numberOfInvalidDates = 0;
         List<DayMeasurement> measurements = new ArrayList<>(  );
         Double[] oneHourMeasurements = new Double[4];
         Double value;
@@ -50,8 +51,7 @@ public class DataProcessor
                    }
                    catch ( NumberFormatException e )
                    {
-                       LOGGER.error( "Invalid measurement value " + onePairSplit[1] + " in the line " + i + " for the " +
-                               "station " + station.name + " on " + stringDate );
+                       numberOfInvalidValues++;
                        value = null;
                    }
                    oneHourMeasurements[hourlyValuesCounter] = value;
@@ -98,7 +98,7 @@ public class DataProcessor
                    }
                    catch ( Exception e )
                    {
-                       LOGGER.error( "Invalid date value " + stringDate + " for the station " + station.name);
+                      numberOfInvalidDates++;
                        date = null;
                    }
                    // save one day measurements to the list of all measurements
@@ -130,6 +130,14 @@ public class DataProcessor
                        }
                    }
                }
+        }
+        if (numberOfInvalidValues > 0)
+        {
+            LOGGER.error( numberOfInvalidValues + " invalid values in the data set vere not saved as measurements" );
+        }
+        if (numberOfInvalidDates > 0)
+        {
+            LOGGER.error( numberOfInvalidDates + " invalid dates in the data set vere not saved as measurements" );
         }
         replaceNullValuesWithMeanValues( measurements );
         station.measurements = measurements;

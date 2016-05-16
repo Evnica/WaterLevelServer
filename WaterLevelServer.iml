@@ -36,5 +36,6 @@
     <orderEntry type="library" scope="RUNTIME" name="jasperreports-fonts-6.2.2" level="project" />
     <orderEntry type="library" name="jasperreports-javaflow-6.2.2" level="project" />
     <orderEntry type="library" name="h2-1.4.191" level="project" />
+    <orderEntry type="library" name="jfreechart-1.0" level="project" />
   </component>
 </module>

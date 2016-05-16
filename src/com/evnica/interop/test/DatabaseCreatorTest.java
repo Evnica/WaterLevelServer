@@ -47,8 +47,8 @@ public class DatabaseCreatorTest
         PreparedStatement statement = DatabaseCreator.getConnection().prepareStatement( "SELECT * FROM measurements;" );
         ResultSet resultSet = statement.executeQuery();
         assertNotNull( resultSet );
-        assertTrue( DatabaseCreator.deleteFromTable() );
-        assertTrue( DatabaseCreator.dropTable() );
+        /*assertTrue( DatabaseCreator.deleteFromTable() );
+        assertTrue( DatabaseCreator.dropTable() );*/
         assertTrue( DatabaseCreator.closeConnection() );
     }
 

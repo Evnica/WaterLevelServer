@@ -23,14 +23,15 @@ import static org.junit.Assert.*;
 public class JasperAssistantTest
 {
     @Test
-    public void getTableModel() throws Exception
+    public void test() throws Exception
     {
         DataStorage.fillTheStorage();
         Station s = DataStorage.findStation( "Riedenburg" );
         assertNotNull( s );
+        DatabaseCreator.connect();
 
         List<DayMeasurement> chosenMeasurements = s.getMeasurementsWithinInterval
-                ( TestData.dates[0], TestData.timestamps[0], TestData.dates[5], TestData.timestamps[1] );
+                ( TestData.dates[1], TestData.timestamps[0], TestData.dates[2], TestData.timestamps[1] );
 
         JasperAssistant.init( chosenMeasurements );
 
@@ -39,10 +40,10 @@ public class JasperAssistantTest
 
         Map<String, Object> parameters = new HashMap<>(  );
         parameters.put( "ReportTitle", s.getName() );
-        parameters.put( "DateFrom", TestData.dates[0].toString( Formatter.getDateFormatter()) + " " +
+        parameters.put( "DateFrom", TestData.dates[1].toString( Formatter.getDateFormatter()) + " " +
                 TestData.timestamps[0].toString( Formatter.getTimeFormatter())
         );
-        parameters.put( "DateTo", TestData.dates[5].toString( Formatter.getDateFormatter()) + " " +
+        parameters.put( "DateTo", TestData.dates[2].toString( Formatter.getDateFormatter()) + " " +
                 TestData.timestamps[1].toString( Formatter.getTimeFormatter())
         );
         parameters.put( "AvailableFrom",
@@ -62,6 +63,15 @@ public class JasperAssistantTest
         JasperPrint jasperPrint = JasperFillManager.fillReport( sourceFileName, parameters, new JRTableModelDataSource( JasperAssistant.getTableModel() ));
         JasperExportManager.exportReportToPdfFile( jasperPrint, "report.pdf" );
 
+
+
+    }
+
+    @Test
+    public void testWithDB() throws Exception
+    {
+        DataStorage.fillTheStorage();
+        Station s = DataStorage.findStation( "Riedenburg" );
 
     }
 
