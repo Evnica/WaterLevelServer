@@ -1,6 +1,5 @@
 package com.evnica.interop.main;
 
-import com.sun.istack.internal.NotNull;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -23,6 +22,11 @@ public class Station
 
     public Station(){}
 
+    public String getName()
+    {
+        return name;
+    }
+
     public Station( String name, String bodyOfWater )
     {
         this.name = name;
@@ -35,7 +39,7 @@ public class Station
     {
         List<DayMeasurement> chosenDays;
 
-        if (startDate.isBefore( endDate ))
+        if (startDate.isBefore( endDate ) || startDate.equals( endDate ))
         {
 
             chosenDays = measurements.stream()
@@ -62,6 +66,7 @@ public class Station
 
         return chosenDays;
     }
+
 
     @Override
     public String toString()

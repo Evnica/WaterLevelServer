@@ -85,7 +85,10 @@ public class DataProcessor
 
                if ( !newDay )
                {
-                   oneDayMeasurements.add( new Measurement(measurementTime, value) );
+                   if ( value != null && measurementTime != null)
+                   {
+                       oneDayMeasurements.add( new Measurement(measurementTime, value) );
+                   }
                }
                else
                {
@@ -98,19 +101,26 @@ public class DataProcessor
                        LOGGER.error( "Invalid date value " + stringDate + " for the station " + station.name);
                        date = null;
                    }
-                   measurements.add( new DayMeasurement(date, oneDayMeasurements) );
+                   // save one day measurements to the list of all measurements
+                   measurements.add( new DayMeasurement( date, oneDayMeasurements ) );
                    oneDayMeasurements = new ArrayList<>(  );
-                   oneDayMeasurements.add( new Measurement( measurementTime, value ) );
+                   // add a not-null measurement to a new day
+                   if ( value != null && measurementTime != null)
+                   {
+                       oneDayMeasurements.add( new Measurement( measurementTime, value ) );
+                   }
                }
-
+               // jump over lines that do not need to be processed
                if (newDay)
                {
+                   // if the end of the file is far away =)
                    if ( i < fileContent.size() - 2 )
                    {
                        stringDate = fileContent.get( i + 1 );
                        i += 13;
                        newDay = false;
                    }
+                   //if it's the end of the file
                    else
                    {
                        if ( value != null )
@@ -174,14 +184,11 @@ public class DataProcessor
                     i--;
                 }
 
-                day.indexOfLastValidMeasurement = i;
-
                 while ( i > 0 )
                 {
                     if (day.hourlyMeasurementValues.get( i ).value != null)
                     {
                         previousValidValue = day.hourlyMeasurementValues.get( i ).value;
-                        day.indexOfFirstValidMeasurement = i;
                     }
                     else //current value is null
                     {

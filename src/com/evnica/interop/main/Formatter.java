@@ -18,14 +18,12 @@ public class Formatter
     static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern( "dd.MM.yyyy" );
     static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern( "HH:mm" );
     static final DateTimeFormatter WEB_FORMATTER = DateTimeFormat.forPattern( "yyyy-MM-dd'T'HH:mm:ss'Z'" );
-
+    static final NumberFormat NUMBER_FORMAT = new DecimalFormat( "#0.00" );
 
     public static DateTimeFormatter getWebDateFormatter()
     {
         return WEB_FORMATTER;
     }
-
-    static final NumberFormat NUMBER_FORMAT = new DecimalFormat( "#0.00" );
 
     public static DateTimeFormatter getDateFormatter()
     {

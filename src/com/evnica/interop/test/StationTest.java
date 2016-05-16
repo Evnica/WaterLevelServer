@@ -1,9 +1,6 @@
 package com.evnica.interop.test;
 
-import com.evnica.interop.main.DataProcessor;
-import com.evnica.interop.main.DataReader;
-import com.evnica.interop.main.DayMeasurement;
-import com.evnica.interop.main.Station;
+import com.evnica.interop.main.*;
 import org.junit.Test;
 
 import java.io.File;
@@ -41,18 +38,18 @@ public class StationTest
 
         measurementsWithin = station.getMeasurementsWithinInterval
                 ( TestData.dates[1], TestData.timestamps[0], TestData.dates[0], TestData.timestamps[1] );
-
         assertEquals( measurementsWithin.size(), 1 );
         assertEquals( measurementsWithin.get( 0 ).getHourlyMeasurementValues().size(), 10 );
-
 
         measurementsWithin = station.getMeasurementsWithinInterval
                 ( TestData.dates[0], TestData.timestamps[0], TestData.dates[1], TestData.timestamps[1] );
         assertEquals( measurementsWithin.size(), 0 );
 
+        // from 2015-03-02 00:00 to 2015-03-03 20:00
         measurementsWithin = station.getMeasurementsWithinInterval
-                ( TestData.dates[4], TestData.timestamps[2], TestData.dates[5], TestData.timestamps[3] );
+                ( TestData.dates[4], TestData.timestamps[0], TestData.dates[5], TestData.timestamps[3] );
         assertEquals( measurementsWithin.size(), 1 );
-        assertEquals( measurementsWithin.get( 0 ).getHourlyMeasurementValues().size(), 4 );
+
+        assertEquals( measurementsWithin.get( 0 ).getHourlyMeasurementValues().size(), 14 );
     }
 }

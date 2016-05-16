@@ -17,8 +17,7 @@ public class DayMeasurement implements Comparable<DayMeasurement>
 {
     LocalDate date;
     List<Measurement> hourlyMeasurementValues = new ArrayList<>();
-    int indexOfLastValidMeasurement = -1; // shows if there are null-values at the end of period
-    int indexOfFirstValidMeasurement = 0; // shows if there are null-values at the end of period
+
 
     DayMeasurement( LocalDate date, List<Measurement> hourlyMeasurementValues )
     {

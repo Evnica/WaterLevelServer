@@ -1,5 +1,7 @@
 package com.evnica.interop.main;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +45,15 @@ public class DataStorage
             names = stations.get( 0 ).name;
         }
         return names;
+    }
+
+    public static void fillTheStorage() throws IOException
+    {
+        List<File> resources = DataReader.listAllFilesInResources( "../WaterLevelServer/app/WEB-INF/resources" );
+        List<List<String>> data = new ArrayList<>( resources.size() );
+        resources.forEach( source -> data.add( DataReader.readData( source ) ) );
+        stations = new ArrayList<>(  );
+        data.forEach(st -> stations.add( DataProcessor.convertTextIntoStation( st ) ) );
     }
 
 
