@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.lowagie.text-2.1.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Java/QuickReports/out/artifacts/quickReports0.4/com.lowagie.text-2.1.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
