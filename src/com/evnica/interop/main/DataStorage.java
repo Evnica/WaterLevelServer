@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class DataStorage
 {
     static List<Station> stations = new ArrayList<>();
-    static final String PATH = "../WaterLevelServer/app/resources";
 
     public static Station findStation ( String stationName)
     {
@@ -48,9 +47,9 @@ public class DataStorage
         return names;
     }
 
-    public static void fillTheStorage() throws IOException
+    public static void fillTheStorage(String path) throws IOException
     {
-        List<File> resources = DataReader.listAllFilesInResources( PATH );
+        List<File> resources = DataReader.listAllFilesInResources( path );
         List<List<String>> data = new ArrayList<>( resources.size() );
         resources.forEach( source -> data.add( DataReader.readData( source ) ) );
         stations = new ArrayList<>(  );

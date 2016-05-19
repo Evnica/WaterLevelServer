@@ -30,7 +30,7 @@ public class DatabaseCreatorTest
     @Test
     public void test() throws Exception
     {
-        DataStorage.fillTheStorage();
+        DataStorage.fillTheStorage("../WaterLevelServer/app/resources");
         Station s = DataStorage.findStation( "Riedenburg" );
         assertNotNull( s );
 

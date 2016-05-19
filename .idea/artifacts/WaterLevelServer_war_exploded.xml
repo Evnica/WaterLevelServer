@@ -19,7 +19,6 @@
           <element id="library" level="project" name="commons-collections-3.2.2" />
           <element id="library" level="project" name="commons-digester-2.1" />
           <element id="library" level="project" name="com.lowagie.text-2.1.7" />
-          <element id="library" level="project" name="jasperreports-javaflow-6.2.2" />
           <element id="library" level="project" name="h2-1.4.191" />
           <element id="library" level="project" name="jfreechart-1.0" />
         </element>

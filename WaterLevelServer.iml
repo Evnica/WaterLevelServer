@@ -11,6 +11,13 @@
         </webroots>
       </configuration>
     </facet>
+    <facet type="javaeeApplication" name="javaEEApplication">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="application.xml" url="file://$MODULE_DIR$/META-INF/application.xml" />
+        </descriptors>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -30,12 +37,13 @@
     <orderEntry type="library" name="commons-beanutils-1.9.2" level="project" />
     <orderEntry type="library" name="commons-logging-1.2" level="project" />
     <orderEntry type="library" name="commons-collections-3.2.2" level="project" />
-    <orderEntry type="library" name="commons-digester3-3.2" level="project" />
     <orderEntry type="library" name="commons-digester-2.1" level="project" />
     <orderEntry type="library" name="com.lowagie.text-2.1.7" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="jasperreports-fonts-6.2.2" level="project" />
-    <orderEntry type="library" name="jasperreports-javaflow-6.2.2" level="project" />
     <orderEntry type="library" name="h2-1.4.191" level="project" />
     <orderEntry type="library" name="jfreechart-1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.33" level="application_server_libraries" />
+    <orderEntry type="library" name="jasperreports-6.2.21" level="project" />
+    <orderEntry type="library" name="jasperreports-fonts-6.2.2" level="project" />
+    <orderEntry type="library" name="jasperreports-javaflow-6.2.2" level="project" />
   </component>
 </module>
