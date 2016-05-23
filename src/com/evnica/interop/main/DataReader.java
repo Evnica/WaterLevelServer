@@ -34,7 +34,7 @@ public class DataReader
         BufferedReader reader = null;
         try
         {
-            reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ) ) );
+            reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ), "UTF8" ) );
             while ( (line = reader.readLine()) != null )
             {
                     data.add( line );

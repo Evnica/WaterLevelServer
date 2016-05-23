@@ -9,7 +9,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -52,10 +52,12 @@ public class ReportServlet extends HttpServlet
     private static final Logger LOGGER = LogManager.getLogger( ReportServlet.class );
     private static final String RESOURCES = "/resources";
     private static final String JASPER_SOURCE = "/jasper/Test3.jasper";  //"/jasper/Test.jasper"; with SansSerif also doesn't work, though this font family is supported by JVM.
+    private static final String TEST_PDF = "jasper/report.pdf";
 
     @Override
     public void init() throws ServletException
     {
+        super.init();
         /*String [] fonts = getFontNames();
         for (String f: fonts)
         {
@@ -68,29 +70,6 @@ public class ReportServlet extends HttpServlet
             System.out.println(ff);
         }*/
     }
-
-    /*public static Font [] getFonts() {
-        return GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-    }
-
-    public static String [] getFontNames() {
-        Font [] fonts = getFonts();
-        String [] fontNames = new String [fonts.length];
-        for (int i = 0; i < fonts.length; i++) {
-            fontNames[i] = fonts[i].getFontName();
-        }
-        return fontNames;
-    }
-
-    public static String [] getFontFamilies() {
-        Font [] fonts = getFonts();
-        String [] fontFamilies = new String [fonts.length];
-        for (int i = 0; i < fonts.length; i++) {
-            fontFamilies[i] = fonts[i].getFamily();
-        }
-        return fontFamilies;
-    }*/
-
 
     @Override
     protected void service( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
@@ -115,8 +94,7 @@ public class ReportServlet extends HttpServlet
         measurementsWithinInterval = requestedStation.getMeasurementsWithinInterval( startDate, startTime, endDate, endTime );
 
         createReport( request, response, requestedStation.name );
-
-
+        //serveReadyContent( request, response );
     }
 
     @Override
@@ -228,9 +206,49 @@ public class ReportServlet extends HttpServlet
 
     }
 
+    private void serveReadyContent(HttpServletRequest request, HttpServletResponse response ) throws IOException
+    {
+        File source = new File (request.getSession().getServletContext().getRealPath( TEST_PDF ));
+
+        OutputStream out = response.getOutputStream();
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "inline; filename=" + source);
+        response.setContentLength((int) source.length());
+        FileInputStream fileInputStream = new FileInputStream( source );
+        int bytes;
+
+        while((bytes = fileInputStream.read()) != -1)
+        {
+            out.write( bytes );
+        }
+    }
+
     @Override
     public void destroy()
     {
         super.destroy();
     }
+
+
+    /*public static Font [] getFonts() {
+        return GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+    }
+
+    public static String [] getFontNames() {
+        Font [] fonts = getFonts();
+        String [] fontNames = new String [fonts.length];
+        for (int i = 0; i < fonts.length; i++) {
+            fontNames[i] = fonts[i].getFontName();
+        }
+        return fontNames;
+    }
+
+    public static String [] getFontFamilies() {
+        Font [] fonts = getFonts();
+        String [] fontFamilies = new String [fonts.length];
+        for (int i = 0; i < fonts.length; i++) {
+            fontFamilies[i] = fonts[i].getFamily();
+        }
+        return fontFamilies;
+    }*/
 }
