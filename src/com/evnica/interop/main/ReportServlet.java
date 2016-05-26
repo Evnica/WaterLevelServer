@@ -33,13 +33,15 @@ import java.util.Map;
 
 @WebServlet (name = "ReportServlet",
              loadOnStartup = 1,
-             urlPatterns = "/ReportServlet")
+             urlPatterns = "/ReportServlet/*")
 public class ReportServlet extends HttpServlet
+
 
 {
     static {
         System.setProperty("java.awt.headless", "true");
-        System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+      //  System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+
     }
 
     private static final long serialVersionUID = 2938837482734983849L;
@@ -51,13 +53,14 @@ public class ReportServlet extends HttpServlet
     private static final String FORMAT = "BS2016SS";
     private static final Logger LOGGER = LogManager.getLogger( ReportServlet.class );
     private static final String RESOURCES = "/resources";
-    private static final String JASPER_SOURCE = "/jasper/Test3.jasper";  //"/jasper/Test.jasper"; with SansSerif also doesn't work, though this font family is supported by JVM.
+    private static final String JASPER_SOURCE = "/jasper/Test.jasper";  //"/jasper/Test.jasper"; with SansSerif also doesn't work, though this font family is supported by JVM.
     private static final String TEST_PDF = "jasper/report.pdf";
 
     @Override
     public void init() throws ServletException
     {
         super.init();
+
         /*String [] fonts = getFontNames();
         for (String f: fonts)
         {
@@ -94,7 +97,6 @@ public class ReportServlet extends HttpServlet
         measurementsWithinInterval = requestedStation.getMeasurementsWithinInterval( startDate, startTime, endDate, endTime );
 
         createReport( request, response, requestedStation.name );
-        //serveReadyContent( request, response );
     }
 
     @Override
@@ -118,7 +120,7 @@ public class ReportServlet extends HttpServlet
             byte[] byteStream = JasperRunManager.runReportToPdf
                     ( source.getAbsolutePath(), parameters, new JRTableModelDataSource( JasperAssistant.getTableModel()));
             OutputStream out = response.getOutputStream();
-            response.setHeader( "Content-Disposition", "inline, filename='Pegel.pdf'" );
+            response.setHeader( "Content-Disposition", "inline; filename=Pegel.pdf" );
             response.setContentType( "application/pdf" );
             response.setContentLength( byteStream.length );
             out.write( byteStream, 0, byteStream.length );
