@@ -6,7 +6,6 @@
     <servlet>
         <servlet-name>ReportServlet</servlet-name>
         <servlet-class>com.evnica.interop.main.ReportServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>ReportServlet</servlet-name>

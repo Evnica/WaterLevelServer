@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 
 import static org.junit.Assert.*;
 
@@ -46,13 +47,27 @@ public class DatabaseCreatorTest
         }
 
         assertTrue( DatabaseCreator.insert( s ) );
+        System.out.println("Values inserted into the table");
 
         PreparedStatement statement = DatabaseCreator.getConnection().prepareStatement( "SELECT * FROM measurements;" );
         ResultSet resultSet = statement.executeQuery();
         assertNotNull( resultSet );
+        int numOfColumns = resultSet.getMetaData().getColumnCount();
+        while ( resultSet.next() )
+        {
+            for (int i = 1; i <= numOfColumns; i++) {
+                if (i > 1) System.out.print(" | ");
+                System.out.print(resultSet.getString(i));
+            }
+            System.out.println("");
+        }
+        System.out.println("Deleting data from the table...");
         assertTrue( DatabaseCreator.deleteFromTable() );
+        System.out.println("Done. Dropping the table...");
         assertTrue( DatabaseCreator.dropTable() );
+        System.out.println("Done");
         assertTrue( DatabaseCreator.closeConnection() );
+        System.out.println("Connection closed");
     }
 
 

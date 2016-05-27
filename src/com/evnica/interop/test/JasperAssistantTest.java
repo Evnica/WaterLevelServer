@@ -62,6 +62,7 @@ public class JasperAssistantTest
 
         JasperPrint jasperPrint = JasperFillManager.fillReport( sourceFileName, parameters, new JRTableModelDataSource( JasperAssistant.getTableModel() ));
         JasperExportManager.exportReportToPdfFile( jasperPrint, "report.pdf" );
+        System.out.println("A file 'report.pdf' created ");
 
     }
 }
