@@ -32,11 +32,8 @@ import java.util.Map;
  */
 
 @WebServlet (name = "ReportServlet",
-             loadOnStartup = 1,
              urlPatterns = "/ReportServlet/*")
 public class ReportServlet extends HttpServlet
-
-
 {
     static {
         System.setProperty("java.awt.headless", "true");
@@ -55,6 +52,9 @@ public class ReportServlet extends HttpServlet
     private static final String RESOURCES = "/resources";
     private static final String JASPER_SOURCE = "/jasper/Test.jasper";  //"/jasper/Test.jasper"; with SansSerif also doesn't work, though this font family is supported by JVM.
     private static final String TEST_PDF = "jasper/report.pdf";
+    private static String errorMessage = "Error";
+
+    public ReportServlet(){super();}
 
     @Override
     public void init() throws ServletException
@@ -75,35 +75,25 @@ public class ReportServlet extends HttpServlet
     }
 
     @Override
-    protected void service( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
-    {
-        if (request.getMethod().toLowerCase().equals( "get" ))
-        {
-            doGet( request, response );
-        }
-        if (request.getMethod().toLowerCase().equals( "post" ))
-        {
-            doPost( request, response );
-        }
-    }
-
-    @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
         storeAvailableData( request );
-        checkValidityOfParameters( request, response );
-        convertDates();
-
-        measurementsWithinInterval = requestedStation.getMeasurementsWithinInterval( startDate, startTime, endDate, endTime );
-
-        createReport( request, response, requestedStation.name );
+        if (checkValidityOfParameters( request, response ))
+        {
+            convertDates();
+            measurementsWithinInterval = requestedStation.getMeasurementsWithinInterval( startDate, startTime, endDate, endTime );
+            createReport( request, response, requestedStation.name );
+        }
+        else
+        {
+            response.sendError( HttpServletResponse.SC_BAD_REQUEST, errorMessage);
+        }
     }
 
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-        doGet( request, response );
-        /*TODO: provide a different implementation*/
+        this.doGet( request, response );
     }
 
     private void createReport( HttpServletRequest request, HttpServletResponse response, String stationName) throws ServletException, IOException
@@ -154,49 +144,70 @@ public class ReportServlet extends HttpServlet
         }
     }
 
-    private void checkValidityOfParameters(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    private boolean checkValidityOfParameters(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-        String format = request.getParameter( "format" );
+        boolean valid = true;
         String stationName = request.getParameter( "name" );
-
         // if the station name is not provided, further processing is impossible
         if ( stationName == null)
         {
             LOGGER.error( "Station name not provided" );
-            response.sendError( HttpServletResponse.SC_BAD_REQUEST,
+            errorMessage =
                     "The station name must be passed as a value of the 'name' parameter for your " +
-                            "request to be processed. " );
+                            "request to be processed. ";
+            valid = false;
         }
-        // if name is provided, look in the storage for the corresponding station
-        requestedStation = DataStorage.findStation( stationName );
-        // if it's not found in storage
-        if (requestedStation == null)
+        else
         {
-
-            response.sendError( HttpServletResponse.SC_BAD_REQUEST,
-                    "Requested station not found in sources. \n " +
-                            "Measurement data is available for the following stations: "
-                            + DataStorage.getNamesOfStationsInStorage() );
+            // if name is provided, look in the storage for the corresponding station
+            requestedStation = DataStorage.findStation( stationName );
+            // if it's not found in storage
+            if (requestedStation == null)
+            {
+                errorMessage =
+                        "Requested station not found in sources. \n " +
+                                "Measurement data is available for the following stations: "
+                                + DataStorage.getNamesOfStationsInStorage();
+                valid = false;
+            }
+            else
+            {
+                String format = request.getParameter( "format" );
+                if (format == null || !format.toUpperCase().equals( FORMAT ))
+                {
+                    LOGGER.error( "Unavailable format requested" );
+                    errorMessage =
+                            "The data exchange is currently available only in BS2016SS format" ;
+                    valid = false;
+                }
+                else
+                {
+                    if ( request.getParameter( "start" ) != null && request.getParameter( "end" ) != null )
+                    {
+                        try
+                        {
+                            startDateTime = Formatter.WEB_FORMATTER.parseLocalDateTime( request.getParameter( "start" ) );
+                            endDateTime = Formatter.WEB_FORMATTER.parseLocalDateTime( request.getParameter( "end" ) );
+                        }
+                        catch ( Exception e )
+                        {
+                            LOGGER.error( "Wrong date format ", e );
+                            errorMessage =
+                                    "The valid start date and end date must be provided in format yyyy-MM-dd'T'HH:mm:ss'Z' ";
+                            valid = false;
+                        }
+                    }
+                    else
+                    {
+                        LOGGER.error( "No date(s) provided in request." );
+                        errorMessage =
+                                "The start date and the end date must be provided in format yyyy-MM-dd'T'HH:mm:ss'Z' ";
+                        valid = false;
+                    }
+                }
+            }
         }
-
-        if (!format.toUpperCase().equals( FORMAT ))
-        {
-            LOGGER.error( "Unavailable format requested" );
-            response.sendError( HttpServletResponse.SC_BAD_REQUEST,
-                    "The data exchange is currently available only in BS2016SS format" );
-        }
-
-        try
-        {
-            startDateTime = Formatter.WEB_FORMATTER.parseLocalDateTime( request.getParameter( "start" ) );
-            endDateTime = Formatter.WEB_FORMATTER.parseLocalDateTime( request.getParameter( "end" ) );
-        }
-        catch ( Exception e )
-        {
-            LOGGER.error( "Wrong date format ", e );
-            response.sendError( HttpServletResponse.SC_BAD_REQUEST,
-                    "The start date and the end date must be provided in format yyyy-MM-dd'T'HH:mm:ss'Z' " );
-        }
+        return valid;
     }
 
     private void convertDates()
